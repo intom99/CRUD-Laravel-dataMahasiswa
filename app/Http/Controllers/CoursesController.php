@@ -36,7 +36,14 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'no_course' => 'required',
+            'course_name' => 'required',
+            'sks' => 'required',
+            'semester' => 'required'
+        ]);
+        Course::create($request->all());
+        return redirect('courses')->with('message', 'Data added successfully');
     }
 
     /**
