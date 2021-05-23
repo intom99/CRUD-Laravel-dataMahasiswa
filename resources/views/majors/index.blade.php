@@ -24,7 +24,17 @@
            
             <div class="card">
                 <div class="card-body">
-                 <a href="" class="btn btn-primary mb-3"><i class="bi bi-plus-lg"></i> Create</a>               
+                                 
+                                  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#createData">
+  <i class="bi bi-plus-lg"></i>  Create
+</button>
+
+@if (session('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+@endif
                                    
                   <table class="table">
                     <thead class="thead-light">
@@ -65,3 +75,38 @@
     </div>
 </div>
 @endsection
+
+
+<!-- Modal Create Data-->
+<div class="modal fade" id="createData" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="createDataLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createDataLabel">Create Data Major</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{action('MajorsController@store')}}">
+          @csrf
+          <div class="form-group">
+            <label>Major Code</label>
+            <input type="text" name="major_code" class="form-control @error('major_code') is-invalid @enderror" value="{{old('major_code')}}" placeholder="input code">
+            @error('major_code') <div class="invalid-feedback">{{$message}}</div>@enderror
+          </div>
+          <div class="form-group">
+            <label>Major Name</label>
+            <input type="text" name="major_name" class="form-control @error('major_name') is-invalid @enderror" value="{{old('major_name')}}" placeholder="input name">
+            @error('major_name') <div class="invalid-feedback">{{$message}}</div>@enderror
+          </div>     
+         
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

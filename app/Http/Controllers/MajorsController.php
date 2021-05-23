@@ -36,7 +36,13 @@ class MajorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'major_code' => 'required',
+            'major_name' => 'required'
+        ]);
+
+        Major::create($request->all());
+        return redirect('/majors')->with('message', 'Data Added Successfully');
     }
 
     /**

@@ -19,3 +19,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/courses', 'CoursesController@index');
 Route::get('/majors', 'MajorsController@index');
 Route::post('/courses', 'CoursesController@store');
+Route::post('/majors', 'MajorsController@store');
