@@ -36,7 +36,7 @@
         {{ session('message') }}
     </div>
 @endif
-                                   
+@if(!empty($courses))             
                   <table class="table">
                     <thead class="thead-light">
                       <tr>
@@ -72,8 +72,14 @@
                                         
                     </tbody>
                   </table>
+
+                  @else
+                  <p>data not available</p>
+                  @endif
+{{-- end of table --}}
+
                   <div class="table-nav">
-<hr>
+                    <hr>
                     <div class="count-data">
                       <strong> Count : {{$course_count}}</strong>
                     </div>
@@ -82,9 +88,7 @@
                     </div>
                   </div>
 
-                  
-
-
+                 
 
                 </div>
               </div>

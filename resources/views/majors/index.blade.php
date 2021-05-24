@@ -35,6 +35,8 @@
         {{ session('message') }}
     </div>
 @endif
+
+@if(!empty($majors))
                                    
                   <table class="table">
                     <thead class="thead-light">
@@ -49,7 +51,7 @@
                         @foreach($majors as $row)
                         <tr>
 
-                         <th scope="row">{{$loop->iteration}}</th>
+                          <th scope="row">{{ ($majors ->currentpage()-1) * $majors ->perpage() + $loop->index + 1 }}</th>
                          <td>{{$row->major_code}}</td>
                          <td>{{$row->major_name}}</td>
                          
@@ -65,11 +67,26 @@
                     
                     </tbody>
                   </table>
+                  @else
+                  <p>data not available</p>
+                  @endif
+                  {{-- end of table --}}
 
-
+                    <div class="table-nav">
+                      <hr>
+                           <div class="count-data">
+                              <strong> Count : {{$major_count}}</strong>
+                            </div>
+                            <div class="paging">
+                                {{$majors->links()}}
+                            </div>
+                    </div>
+                    {{-- end of table-nav --}}
 
                 </div>
+                {{-- end of card-body --}}
               </div>
+              {{-- end of cart --}}
 
         </div>
     </div>
