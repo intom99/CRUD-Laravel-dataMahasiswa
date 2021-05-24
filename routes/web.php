@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Route::get('/', 'HomesController@index');
 Route::get('/courses', 'CoursesController@index');
 Route::get('/majors', 'MajorsController@index');
 Route::post('/courses', 'CoursesController@store');
