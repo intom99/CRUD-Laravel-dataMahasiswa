@@ -52,14 +52,14 @@
                         @foreach($courses as $row)
                         <tr>
 
-                         <th scope="row">{{$loop->iteration}}</th>
+                         <th scope="row">{{ ($courses ->currentpage()-1) * $courses ->perpage() + $loop->index + 1 }}</th>
                          <td>{{$row->no_course}}</td>
                          <td>{{$row->course_name}}</td>
                          <td>{{$row->sks}}</td>
                          <td>{{$row->semester}}</td>
                           
                          <td>
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editData">
+                          <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#editData">
                             <i class="bi bi-pencil-square"></i> Edit
                           </button>
                              
@@ -69,9 +69,20 @@
                         </tr>
                          @endforeach
                         
-                    
+                                        
                     </tbody>
                   </table>
+                  <div class="table-nav">
+<hr>
+                    <div class="count-data">
+                      <strong> Count : {{$course_count}}</strong>
+                    </div>
+                    <div class="paging">
+                      {{$courses->links()}}
+                    </div>
+                  </div>
+
+                  
 
 
 
