@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', 'Majors')
+@section('title', 'Home')
 
 @section('container')
 
