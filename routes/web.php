@@ -21,3 +21,4 @@ Route::get('/courses', 'CoursesController@index');
 Route::get('/majors', 'MajorsController@index');
 Route::post('/courses', 'CoursesController@store');
 Route::post('/majors', 'MajorsController@store');
+Route::get('/students', 'StudentsController@index');
