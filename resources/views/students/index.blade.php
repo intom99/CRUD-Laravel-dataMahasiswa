@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', 'Courses')
+@section('title', 'Student')
 
 
 @section('container')
@@ -36,7 +36,60 @@
         {{ session('message') }}
     </div>
 @endif
+@if(!empty($students))  
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">NIM</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Address</th>
+        <th scope="col">Major</th>
+        <th scope="col">Course</th>
+                                <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        @foreach($students as $row)
+        <tr>
 
+          <th scope="row">{{ ($students ->currentpage()-1) * $students ->perpage() + $loop->index + 1 }}</th>
+         <td>{{$row->nim}}</td>
+         <td>{{$row->name}}</td>
+         <td>{{$row->email}}</td>
+         <td>{{$row->address}}</td>
+         <td>{{$row->major->major_name}}</td>
+         <td>{{$row->course->course_name}}</td>
+         
+         
+          
+         <td>
+             <a href="" class="btn btn-primary mr-2" title="Edit"><i class="bi bi-pencil-square"></i></a>
+             <a href="" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i></a>
+         </td>
+
+        </tr>
+         @endforeach
+        
+    
+    </tbody>
+  </table>
+  @else
+  <p>data not available</p>
+  @endif
+  {{-- end of table --}}
+
+    <div class="table-nav">
+      <hr>
+           <div class="count-data">
+              <strong> Count : {{$student_count}}</strong>
+            </div>
+            <div class="paging">
+                {{$students->links()}}
+            </div>
+    </div>
+    {{-- end of table-nav --}}
                 
 
                 </div>
