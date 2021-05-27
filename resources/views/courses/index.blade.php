@@ -63,8 +63,12 @@
                             <i class="bi bi-pencil-square"></i> Edit
                           </button>
                              
-                             <a href="" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
-                         </td>
+                          <form action="{{action('CoursesController@destroy', $row->id)}}" method="post" class="d-inline">
+                            @method('delete')
+                            @csrf
+                             <button type="submit" class="btn btn-danger">Delete</button>
+                           </form>    
+                        </td>
 
                         </tr>
                          @endforeach
