@@ -88,6 +88,10 @@ class MajorsController extends Controller
      */
     public function destroy(Major $major)
     {
-        //
+        // $majors = Major::findOrFail($major);
+        // $majors->delete();
+        // return redirect('/majors');
+        Major::destroy($major->id);
+        return redirect('/majors')->with('message', 'Data deleted successfully');
     }
 }
