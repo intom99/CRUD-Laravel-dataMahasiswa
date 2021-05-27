@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomesController@index');
 Route::get('/courses', 'CoursesController@index');
-Route::get('/majors', 'MajorsController@index');
 Route::post('/courses', 'CoursesController@store');
+Route::delete('/courses/{course}', 'CoursesController@destroy');
+Route::get('/majors', 'MajorsController@index');
 Route::post('/majors', 'MajorsController@store');
+Route::delete('/majors/{major}', 'MajorsController@destroy');
 Route::get('/students', 'StudentsController@index');
+// Route::delete('/students/{student}', 'StudentsController@destroy');
