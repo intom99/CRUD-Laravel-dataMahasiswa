@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col-8">
-            <h1><i class="bi bi-award"></i> Majors</h1>
+            <h1><i class="bi bi-award-fill"></i> Major</h1>
         </div>
         <div class="col-4">
             <nav aria-label="breadcrumb">
@@ -58,8 +58,13 @@
                           
                          <td>
                              <a href="" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Edit</a>
-                             <a href="" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
-                         </td>
+                             {{-- <a href="" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a> --}}
+                         <form action="{{action('MajorsController@destroy', $row->id)}}" method="post" class="d-inline">
+                          @method('delete')
+                          @csrf
+                           <button type="submit" class="btn btn-danger">Delete</button>
+                         </form>
+                            </td>
 
                         </tr>
                          @endforeach
