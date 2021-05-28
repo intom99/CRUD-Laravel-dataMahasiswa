@@ -62,12 +62,10 @@
                           <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#editData">
                             <i class="bi bi-pencil-square"></i> Edit
                           </button>
-                             
-                          <form action="{{action('CoursesController@destroy', $row->id)}}" method="post" class="d-inline">
-                            @method('delete')
-                            @csrf
-                             <button type="submit" class="btn btn-danger">Delete</button>
-                           </form>    
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData">
+                            <i class="bi bi-trash"></i> Delete
+                          </button>                   
+                          
                         </td>
 
                         </tr>
@@ -158,25 +156,26 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{{action('CoursesController@store')}}">
+        <form method="POST" action="{{action('CoursesController@update', $row->id)}}">
+          @method('PATCH')
           @csrf
           <div class="form-group">
             <label>No. Course</label>
-            <input type="text" name="no_course" class="form-control @error('no_course') is-invalid @enderror" value="{{old('no_course')}}" placeholder="input no course">
+            <input type="text" name="no_course" class="form-control @error('no_course') is-invalid @enderror" value="{{$row->no_course}}" placeholder="input no course">
             @error('no_course') <div class="invalid-feedback">{{$message}}</div>@enderror
           </div>
           <div class="form-group">
             <label>Course Name</label>
-            <input type="text" name="course_name" class="form-control @error('course_name') is-invalid @enderror" value="{{old('course_name')}}" placeholder="input course name">
+            <input type="text" name="course_name" class="form-control @error('course_name') is-invalid @enderror" value="{{$row->course_name}}" placeholder="input course name">
             @error('course_name') <div class="invalid-feedback">{{$message}}</div>@enderror
           </div>
           <div class="form-group">
             <label>SKS</label>
-            <input type="text" name="sks" class="form-control" placeholder="input sks">
+            <input type="text" name="sks" class="form-control" placeholder="input sks" value="{{$row->sks}}">
           </div>
           <div class="form-group">
             <label>Semester</label>
-            <input type="text" name="semester" class="form-control" placeholder="input semester">
+            <input type="text" name="semester" class="form-control" value="{{$row->semester}}" placeholder="input semester">
           </div>    
          
       </div>
@@ -188,3 +187,29 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal Delete-->
+<form action="{{action('CoursesController@destroy', $row->id)}}" method="post" class="d-inline">
+  @method('delete')
+  @csrf
+  <div class="modal fade" id="deleteData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteDataBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Delete Data</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+           <p>Do you wanna deleted {{$row->course_name}} course?</p>    
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>  
