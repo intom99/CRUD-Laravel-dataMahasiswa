@@ -77,7 +77,18 @@ class MajorsController extends Controller
      */
     public function update(Request $request, Major $major)
     {
-        //
+        $request->validate([
+            'major_code' => 'required',
+            'major_name' => 'required'
+        ]);
+
+        Major::where('id', $major->id)
+            ->update([
+                'major_code' => $request->major_code,
+                'major_name' => $request->major_name
+
+            ]);
+        return redirect('/majors')->with('message', 'Data updated successfully');
     }
 
     /**
@@ -88,9 +99,6 @@ class MajorsController extends Controller
      */
     public function destroy(Major $major)
     {
-        // $majors = Major::findOrFail($major);
-        // $majors->delete();
-        // return redirect('/majors');
         Major::destroy($major->id);
         return redirect('/majors')->with('message', 'Data deleted successfully');
     }
