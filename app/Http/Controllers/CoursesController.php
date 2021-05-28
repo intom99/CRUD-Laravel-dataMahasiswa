@@ -79,7 +79,21 @@ class CoursesController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        $request->validate([
+            'no_course' => 'required',
+            'course_name' => 'required',
+            'sks' => 'required',
+            'semester' => 'required'
+        ]);
+
+        Course::where('id', $course->id)
+            ->update([
+                'no_course' => $request->no_course,
+                'course_name' => $request->course_name,
+                'sks' => $request->sks,
+                'semester' => $request->semester
+            ]);
+        return redirect('/courses')->with('message', 'Data updated successfully');
     }
 
     /**
