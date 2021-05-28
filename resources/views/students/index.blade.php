@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col-8">
-            <h1><i class="bi bi-user"></i> Student</h1>
+            <h1><i class="bi bi-person-fill"></i> Student</h1>
         </div>
         <div class="col-4">
             <nav aria-label="breadcrumb">
@@ -24,10 +24,9 @@
            
             <div class="card">
                 <div class="card-body">
-                 {{-- <a href="" class="btn btn-primary mb-3"><i class="bi bi-plus-lg"></i> Create</a>   --}}
-                 
+                
                  <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#createData">
+<button type="button" class="btn btn-primary mb-3" title="create" data-toggle="modal" data-target="#createData">
   <i class="bi bi-plus-lg"></i>  Create
 </button>
 
@@ -66,7 +65,13 @@
           
          <td>
              <a href="" class="btn btn-primary mr-2" title="Edit"><i class="bi bi-pencil-square"></i></a>
-             <a href="" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i></a>
+           
+
+             <form action="{{action('StudentsController@destroy', $row->id)}}" method="post" class="d-inline">
+              @method('delete')
+              @csrf
+               <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</button>
+             </form>
          </td>
 
         </tr>
