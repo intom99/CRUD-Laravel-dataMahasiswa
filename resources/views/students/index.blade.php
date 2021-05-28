@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col-8">
-            <h1><i class="bi bi-person-fill"></i> Student</h1>
+            <h1><i class="bi bi-people-fill"></i> Student</h1>
         </div>
         <div class="col-4">
             <nav aria-label="breadcrumb">
@@ -43,10 +43,7 @@
         <th scope="col">NIM</th>
         <th scope="col">Name</th>
         <th scope="col">Email</th>
-        <th scope="col">Address</th>
-        <th scope="col">Major</th>
-        <th scope="col">Course</th>
-                                <th scope="col">Action</th>
+        <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -57,20 +54,14 @@
          <td>{{$row->nim}}</td>
          <td>{{$row->name}}</td>
          <td>{{$row->email}}</td>
-         <td>{{$row->address}}</td>
-         <td>{{$row->major->major_name}}</td>
-         <td>{{$row->course->course_name}}</td>
-         
-         
           
          <td>
-             <a href="" class="btn btn-primary mr-2" title="Edit"><i class="bi bi-pencil-square"></i></a>
-           
-
+             <a href="/students/{{$row->id}}" class="btn btn-success mr-2" title="Detail"><i class="bi bi-info-lg"></i></a>
+                  
              <form action="{{action('StudentsController@destroy', $row->id)}}" method="post" class="d-inline">
               @method('delete')
               @csrf
-               <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</button>
+               <button type="submit" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i> </button>
              </form>
          </td>
 
@@ -94,9 +85,7 @@
                 {{$students->links()}}
             </div>
     </div>
-    {{-- end of table-nav --}}
-                
-
+    {{-- end of table-nav --}}         
                 </div>
               </div>
 
@@ -104,3 +93,48 @@
     </div>
 </div>
 @endsection
+
+<!-- Modal Create Data-->
+<div class="modal fade" id="createData" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="createDataLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createDataLabel">Create Data Student</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{action('StudentsController@store')}}">
+          @csrf
+          <div class="form-group">
+            <label class="font-weight-bold">NIM</label>
+            <input type="text" name="nim" class="form-control @error('nim') is-invalid @enderror" value="{{old('nim')}}" placeholder="input NIM">
+            @error('nim') <div class="invalid-feedback">{{$message}}</div>@enderror
+          </div>
+          <div class="form-group">
+            <label class="font-weight-bold">Name</label>
+            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}" placeholder="input name">
+            @error('name') <div class="invalid-feedback">{{$message}}</div>@enderror
+          </div>     
+          <div class="form-group">
+            <label class="font-weight-bold">Email</label>
+            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{old('email')}}" placeholder="input email">
+            @error('email') <div class="invalid-feedback">{{$message}}</div>@enderror
+          </div>     
+          <div class="form-group">
+            <label class="font-weight-bold">Address</label>
+            <input type="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{old('address')}}" placeholder="input address">
+            @error('address') <div class="invalid-feedback">{{$message}}</div>@enderror
+          </div>
+             
+         
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
