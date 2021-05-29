@@ -62,7 +62,7 @@
                           <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#editData{{$row->id}}">
                             <i class="bi bi-pencil-square"></i> Edit
                           </button>
-                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData">
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData{{$row->id}}">
                             <i class="bi bi-trash"></i> Delete
                           </button>                   
                           
@@ -189,29 +189,31 @@
     </div>
   </div>
 </div>
-@endforeach
+
 
 <!-- Modal Delete-->
-<form action="{{action('CoursesController@destroy', $row->id)}}" method="post" class="d-inline">
-  @method('delete')
-  @csrf
-  <div class="modal fade" id="deleteData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteDataBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Delete Data</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-           <p>Do you wanna deleted {{$row->course_name}} course?</p>    
+<div class="modal fade" id="deleteData{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteDataBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Delete Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="{{action('CoursesController@destroy', $data->id)}}" method="post" class="d-inline">
+            @method('delete')
+            @csrf
+           <p>Do you wanna deleted <b>{{$data->course_name}}</b> course?</p>    
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-danger">Delete</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </form>  
       </div>
     </div>
   </div>
 </div>
-</form>  
+
+@endforeach
