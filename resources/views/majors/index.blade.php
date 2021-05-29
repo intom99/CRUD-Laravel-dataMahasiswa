@@ -54,16 +54,13 @@
                          <td>
                             
                              <!-- Button trigger modal -->
-                          <button type="button" class="btn btn-primary" title="Edit" data-toggle="modal" data-target="#editData{{$row->id}}">
+                          <button type="button" class="btn btn-primary mr-2" title="Edit" data-toggle="modal" data-target="#editData{{$row->id}}">
                             <i class="bi bi-pencil-square"></i> Edit
                           </button>
-                                            
-                         <form action="{{action('MajorsController@destroy', $row->id)}}" method="post" class="d-inline">
-                          @method('delete')
-                          @csrf
-                           <button type="submit" class="btn btn-danger" title="delete"><i class="bi bi-trash"></i> Delete</button>
-                         </form>
-                            </td>
+                          <button type="button" class="btn btn-danger" title="Delete" data-toggle="modal" data-target="#deleteData{{$row->id}}">
+                            <i class="bi bi-trash"></i> Delete
+                          </button>
+                          </td>
 
                         </tr>
                          @endforeach
@@ -163,6 +160,32 @@
         <button type="submit" class="btn btn-primary">Save</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Delete-->
+<div class="modal fade" id="deleteData{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteDataBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Delete Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{action('MajorsController@destroy', $data->id)}}" method="post" class="d-inline">
+          @method('delete')
+          @csrf
+           <p>Do you wanna delete major <b>{{$data->major_name}}</b> ?</p>    
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </form>  
       </div>
     </div>
   </div>
