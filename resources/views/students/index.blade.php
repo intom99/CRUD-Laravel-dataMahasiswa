@@ -31,46 +31,43 @@
 </button>
 
 @if (session('message'))
-    <div class="alert alert-success">
-        {{ session('message') }}
-    </div>
+<div class="alert alert-success">
+  {{ session('message') }}
+</div>
 @endif
 @if(!empty($students))  
 <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">NIM</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-        @foreach($students as $row)
-        <tr>
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">NIM</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach($students as $row)
+    <tr>
+      
+      <th scope="row">{{ ($students ->currentpage()-1) * $students ->perpage() + $loop->index + 1 }}</th>
+      <td>{{$row->nim}}</td>
+      <td>{{$row->name}}</td>
+      <td>{{$row->email}}</td>
+      
+      <td>
+        <a href="/students/{{$row->id}}" class="btn btn-success mr-2" title="Detail"><i class="bi bi-info-lg"></i> Detail</a>
+        <button type="button" class="btn btn-danger" title="Delete" data-toggle="modal" data-target="#deleteData{{$row->id}}">
+          <i class="bi bi-trash"></i> Delete
+        </button>
 
-          <th scope="row">{{ ($students ->currentpage()-1) * $students ->perpage() + $loop->index + 1 }}</th>
-         <td>{{$row->nim}}</td>
-         <td>{{$row->name}}</td>
-         <td>{{$row->email}}</td>
-          
-         <td>
-             <a href="/students/{{$row->id}}" class="btn btn-success mr-2" title="Detail"><i class="bi bi-info-lg"></i></a>
-                  
-             <form action="{{action('StudentsController@destroy', $row->id)}}" method="post" class="d-inline">
-              @method('delete')
-              @csrf
-               <button type="submit" class="btn btn-danger" title="Delete"><i class="bi bi-trash"></i> </button>
-             </form>
-         </td>
+      </td>
 
-        </tr>
-         @endforeach
-        
-    
-    </tbody>
-  </table>
+    </tr>
+    @endforeach
+       
+  </tbody>
+</table>
   @else
   <p>data not available</p>
   @endif
@@ -138,3 +135,31 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal Delete-->
+@foreach ($students as $data)
+<div class="modal fade" id="deleteData{{$data->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteDataBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Delete Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{action('StudentsController@destroy', $data->id)}}" method="post" class="d-inline">
+          @method('delete')
+          @csrf
+          <p>Do you wanna deleted <b>{{$data->name}}</b> course?</p>    
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>  
+      </div>
+    </div>
+  </div>
+</div>
+@endforeach
