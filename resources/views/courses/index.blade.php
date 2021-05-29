@@ -59,7 +59,7 @@
                          <td>{{$row->semester}}</td>
                           
                          <td>
-                          <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#editData">
+                          <button type="button" class="btn btn-primary mr-2" data-toggle="modal" data-target="#editData{{$row->id}}">
                             <i class="bi bi-pencil-square"></i> Edit
                           </button>
                           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteData">
@@ -145,8 +145,10 @@
   </div>
 </div>
 
+
 <!-- Modal Edit Data-->
-<div class="modal fade" id="editData" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="editDataLabel" aria-hidden="true">
+@foreach ($courses as $data)
+<div class="modal fade" id="editData{{$data->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="editDataLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -156,26 +158,26 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{{action('CoursesController@update', $row->id)}}">
+        <form method="POST" action="{{action('CoursesController@update', $data->id)}}">
           @method('PATCH')
           @csrf
           <div class="form-group">
             <label>No. Course</label>
-            <input type="text" name="no_course" class="form-control @error('no_course') is-invalid @enderror" value="{{$row->no_course}}" placeholder="input no course">
+            <input type="text" name="no_course" class="form-control @error('no_course') is-invalid @enderror" value="{{$data->no_course}}" placeholder="input no course">
             @error('no_course') <div class="invalid-feedback">{{$message}}</div>@enderror
           </div>
           <div class="form-group">
             <label>Course Name</label>
-            <input type="text" name="course_name" class="form-control @error('course_name') is-invalid @enderror" value="{{$row->course_name}}" placeholder="input course name">
+            <input type="text" name="course_name" class="form-control @error('course_name') is-invalid @enderror" value="{{$data->course_name}}" placeholder="input course name">
             @error('course_name') <div class="invalid-feedback">{{$message}}</div>@enderror
           </div>
           <div class="form-group">
             <label>SKS</label>
-            <input type="text" name="sks" class="form-control" placeholder="input sks" value="{{$row->sks}}">
+            <input type="text" name="sks" class="form-control" placeholder="input sks" value="{{$data->sks}}">
           </div>
           <div class="form-group">
             <label>Semester</label>
-            <input type="text" name="semester" class="form-control" value="{{$row->semester}}" placeholder="input semester">
+            <input type="text" name="semester" class="form-control" value="{{$data->semester}}" placeholder="input semester">
           </div>    
          
       </div>
@@ -187,7 +189,7 @@
     </div>
   </div>
 </div>
-
+@endforeach
 
 <!-- Modal Delete-->
 <form action="{{action('CoursesController@destroy', $row->id)}}" method="post" class="d-inline">
