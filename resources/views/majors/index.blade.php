@@ -54,14 +54,14 @@
                          <td>
                             
                              <!-- Button trigger modal -->
-                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editData">
+                          <button type="button" class="btn btn-primary" title="Edit" data-toggle="modal" data-target="#editData{{$row->id}}">
                             <i class="bi bi-pencil-square"></i> Edit
                           </button>
                                             
                          <form action="{{action('MajorsController@destroy', $row->id)}}" method="post" class="d-inline">
                           @method('delete')
                           @csrf
-                           <button type="submit" class="btn btn-danger">Delete</button>
+                           <button type="submit" class="btn btn-danger" title="delete"><i class="bi bi-trash"></i> Delete</button>
                          </form>
                             </td>
 
@@ -132,8 +132,9 @@
   </div>
 </div>
 
+@foreach($majors as $data)
 <!-- Modal Edit Data Major-->
-<div class="modal fade" id="editData" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="editDataLabel" aria-hidden="true">
+<div class="modal fade" id="editData{{$data->id}}" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="editDataLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -143,17 +144,17 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{{action('MajorsController@update', $row->id)}}">
+        <form method="POST" action="{{action('MajorsController@update', $data->id)}}">
           @method('PATCH')
           @csrf
           <div class="form-group">
             <label class="font-weight-bold">Major Code</label>
-            <input type="text" name="major_code" class="form-control @error('major_code') is-invalid @enderror" value="{{$row->major_code}}" placeholder="input code">
+            <input type="text" name="major_code" class="form-control @error('major_code') is-invalid @enderror" value="{{$data->major_code}}" placeholder="input code">
             @error('major_code') <div class="invalid-feedback">{{$message}}</div>@enderror
           </div>
           <div class="form-group">
             <label class="font-weight-bold">Major Name</label>
-            <input type="text" name="major_name" class="form-control @error('major_name') is-invalid @enderror" value="{{$row->major_name}}" placeholder="input name">
+            <input type="text" name="major_name" class="form-control @error('major_name') is-invalid @enderror" value="{{$data->major_name}}" placeholder="input name">
             @error('major_name') <div class="invalid-feedback">{{$message}}</div>@enderror
           </div>     
          
@@ -166,3 +167,4 @@
     </div>
   </div>
 </div>
+@endforeach
