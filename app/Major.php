@@ -10,6 +10,6 @@ class Major extends Model
 
     public function student()
     {
-        return $this->hasOne('App\Student', 'major_id');
+        return $this->hasMany('App\Student', 'major_id');
     }
 }
