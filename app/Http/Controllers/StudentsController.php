@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Student;
+use App\Major;
+use App\Course;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
@@ -16,7 +18,9 @@ class StudentsController extends Controller
     {
         $students = Student::orderBy('id', 'asc')->paginate(10);
         $student_count = Student::count();
-        return view('students.index', compact('students', 'student_count'));
+        $major_list = Major::all()->sortBy('major_code');
+        $course_list = Course::all();
+        return view('students.index', compact('students', 'student_count', 'major_list', 'course_list'));
     }
 
     /**
@@ -26,6 +30,7 @@ class StudentsController extends Controller
      */
     public function create()
     {
+
         //
     }
 
@@ -37,6 +42,17 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nim' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'course_id' => 'required',
+            'major_id' => 'required'
+        ]);
+
+        Student::create($request->all());
+        return redirect('/students')->with('message', 'Data Added Successfully');
     }
 
     /**
@@ -47,7 +63,9 @@ class StudentsController extends Controller
      */
     public function show(Student $student)
     {
-        return view('students.show', compact('student'));
+        $major_list = Major::all()->sortBy('major_code');
+        $course_list = Course::all();
+        return view('students.show', compact('student', 'major_list', 'course_list'));
     }
 
     /**
