@@ -48,8 +48,7 @@
   </thead>
   <tbody>
     @foreach($students as $row)
-    <tr>
-      
+    <tr>    
       <th scope="row">{{ ($students ->currentpage()-1) * $students ->perpage() + $loop->index + 1 }}</th>
       <td>{{$row->nim}}</td>
       <td>{{$row->name}}</td>
@@ -123,6 +122,24 @@
             <label class="font-weight-bold">Address</label>
             <input type="address" name="address" class="form-control @error('address') is-invalid @enderror" value="{{old('address')}}" placeholder="input address">
             @error('address') <div class="invalid-feedback">{{$message}}</div>@enderror
+          </div>
+          <div class="form-group">
+            <label class="font-weight-bold">Major</label>
+            <select name="major_id" class="form-control">
+              <option value="">--Choose a Major--</option>
+              @foreach ($major_list as $data)
+                  <option value="{{$data->id}}">{{$data->major_code.' - '.$data->major_name}}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="font-weight-bold">Course</label>
+            <select name="course_id" class="form-control">
+              <option value="">--Choose a Course--</option>
+              @foreach ($course_list as $data)
+                  <option value="{{$data->id}}">{{$data->no_course.' - '.$data->course_name}}</option>
+              @endforeach
+            </select>
           </div>
              
          
