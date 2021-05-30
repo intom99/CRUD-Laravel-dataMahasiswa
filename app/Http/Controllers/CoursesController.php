@@ -14,10 +14,8 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        // $courses = Course::all()->sortBy('course_name');
-        $courses = Course::orderBy('no_course', 'asc')->paginate(10);
+        $courses = Course::orderBy('no_course', 'asc')->paginate(4);
         $course_count = Course::count();
-        // $course_list = Course::orderBy('course_name', 'desc')->paginate(5);
         return view('courses.index', compact('courses', 'course_count'));
     }
 

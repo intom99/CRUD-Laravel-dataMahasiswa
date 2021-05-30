@@ -14,7 +14,7 @@ class MajorsController extends Controller
      */
     public function index()
     {
-        $majors = Major::orderBy('major_code', 'asc')->paginate(5);
+        $majors = Major::orderBy('major_code', 'asc')->paginate(4);
         $major_count = Major::count();
         return view('majors.index', compact('majors', 'major_count'));
     }
