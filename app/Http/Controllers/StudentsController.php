@@ -16,7 +16,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
-        $students = Student::orderBy('id', 'asc')->paginate(10);
+        $students = Student::orderBy('id', 'asc')->paginate(4);
         $student_count = Student::count();
         $major_list = Major::all()->sortBy('major_code');
         $course_list = Course::all();
@@ -88,7 +88,26 @@ class StudentsController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $request->validate([
+            'nim' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'course_id' => 'required',
+            'major_id' => 'required'
+        ]);
+
+        Student::where('id', $student->id)->update([
+            'nim' => $request->nim,
+            'name' => $request->name,
+            'email' => $request->email,
+            'address' => $request->address,
+            'course_id' => $request->course_id,
+            'major_id' => $request->major_id
+        ]);
+
+
+        return redirect('/students')->with('message', 'Data Updated successfully');
     }
 
     /**
