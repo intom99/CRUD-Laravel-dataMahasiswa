@@ -23,3 +23,7 @@ body {
     float: right;
     text-align: right;
 }
+
+.height{
+    height: 600px;
+}

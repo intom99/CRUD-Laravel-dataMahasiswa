@@ -34,6 +34,10 @@
       </nav>
 
       @yield('container')
+      
+      <footer class="fixed-bottom">
+        <p class="text-center"><b>&copy; 2021</b></p>
+      </footer>
 
     <!-- Optional JavaScript; choose one of the two! -->
 
