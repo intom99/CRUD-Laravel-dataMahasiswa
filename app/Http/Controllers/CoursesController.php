@@ -12,11 +12,14 @@ class CoursesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::orderBy('no_course', 'asc')->paginate(4);
+        $limit = 4;
+        $search = $request->text_search;
+        $courses = Course::where('course_name', 'like', "%" . $search . "%")->orwhere('no_course', 'like', "%" . $search . "%")->orwhere('semester', 'like', "%" . $search . "%")->orderBy('no_course', 'asc')->paginate($limit);
         $course_count = Course::count();
-        return view('courses.index', compact('courses', 'course_count'));
+        $no = $limit * ($courses->currentPage() - 1);
+        return view('courses.index', compact('courses', 'course_count', 'no', 'search'));
     }
 
     /**

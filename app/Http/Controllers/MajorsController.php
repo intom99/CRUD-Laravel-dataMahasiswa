@@ -12,11 +12,14 @@ class MajorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $majors = Major::orderBy('major_code', 'asc')->paginate(4);
+        $limit = 4;
+        $search = $request->text_search;
+        $majors = Major::where('major_code', 'like', "%" . $search . "%")->orwhere('major_name', 'like', "%" . $search . "%")->orderBy('major_code', 'asc')->paginate($limit);
         $major_count = Major::count();
-        return view('majors.index', compact('majors', 'major_count'));
+        $no = $limit * ($majors->currentPage() - 1);
+        return view('majors.index', compact('majors', 'major_count', 'search', 'no'));
     }
 
     /**

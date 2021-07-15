@@ -14,13 +14,16 @@ class StudentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::orderBy('id', 'asc')->paginate(4);
+        $limit = 4;
+        $search = $request->text_search;
+        $students = Student::where('name', 'like', "%" . $search . "%")->orwhere('nim', 'like', "%" . $search . "%")->orderBy('id', 'asc')->paginate($limit);
         $student_count = Student::count();
         $major_list = Major::all()->sortBy('major_code');
         $course_list = Course::all();
-        return view('students.index', compact('students', 'student_count', 'major_list', 'course_list'));
+        $no = $limit * ($students->currentPage() - 1);
+        return view('students.index', compact('students', 'student_count', 'major_list', 'course_list', 'no', 'search'));
     }
 
     /**
@@ -122,4 +125,12 @@ class StudentsController extends Controller
         Student::destroy($student->id);
         return redirect('/students')->with('message', 'Data student deleted successfully');
     }
+
+    // public function search(Request $request)
+    // {
+    //     $limit = 5;
+    //     $search = $request->text_search;
+    //     $students = Student::where('name', 'like', "%" . $search . "%")->paginate($limit);
+    //     return view('students.index', compact('students'));
+    // }
 }
