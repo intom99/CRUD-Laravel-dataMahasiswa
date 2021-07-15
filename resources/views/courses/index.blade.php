@@ -27,9 +27,13 @@
                  {{-- <a href="" class="btn btn-primary mb-3"><i class="bi bi-plus-lg"></i> Create</a>   --}}
                  
                  <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#createData">
+<button type="button" class="btn btn-primary mb-3 float-left" data-toggle="modal" data-target="#createData">
   <i class="bi bi-plus-lg"></i>  Create
 </button>
+
+<form class="float-right" action="{{url('/courses')}}" method="get">@csrf
+  <input type="text" name="text_search" class="form-control" placeholder="search course: no, name or smster">
+  </form>
 
 @if (session('message'))
     <div class="alert alert-success">
@@ -52,7 +56,7 @@
                         @foreach($courses as $row)
                         <tr>
 
-                         <th scope="row">{{ ($courses ->currentpage()-1) * $courses ->perpage() + $loop->index + 1 }}</th>
+                         <th scope="row">{{ ++$no }}</th>
                          <td>{{$row->no_course}}</td>
                          <td>{{$row->course_name}}</td>
                          <td>{{$row->sks}}</td>

@@ -26,9 +26,13 @@
                 <div class="card-body">
                                  
          <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#createData">
+          <button type="button" class="btn btn-primary mb-3 float-left" data-toggle="modal" data-target="#createData">
             <i class="bi bi-plus-lg"></i>  Create
           </button>
+          <form class="float-right" action="{{url('/majors')}}" method="get">@csrf
+            <input type="text" name="text_search" class="form-control" placeholder="search major: code or name">
+            </form>
+
             @if (session('message'))
                 <div class="alert alert-success">
                     {{ session('message') }}
@@ -48,7 +52,7 @@
                     <tbody>
                         @foreach($majors as $row)
                         <tr>
-                         <th scope="row">{{ ($majors ->currentpage()-1) * $majors ->perpage() + $loop->index + 1 }}</th>
+                         <th scope="row">{{ ++$no }}</th>
                          <td>{{$row->major_code}}</td>
                          <td>{{$row->major_name}}</td>                         
                          <td>

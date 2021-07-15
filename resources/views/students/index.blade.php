@@ -2,8 +2,8 @@
 
 @section('title', 'Student')
 
-
 @section('container')
+
 <div class="container">
     <div class="row mt-4">
         <div class="col-8">
@@ -25,10 +25,14 @@
             <div class="card">
                 <div class="card-body">
                 
-                 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary mb-3" title="create" data-toggle="modal" data-target="#createData">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary mb-3 float-left" title="create" data-toggle="modal" data-target="#createData">
   <i class="bi bi-plus-lg"></i>  Create
 </button>
+
+<form class="float-right" action="{{url('/students')}}" method="get">@csrf
+<input type="text" name="text_search" class="form-control" placeholder="search student: nim or name">
+</form>
 
 @if (session('message'))
 <div class="alert alert-success">
@@ -49,7 +53,7 @@
   <tbody>
     @foreach($students as $row)
     <tr>    
-      <th scope="row">{{ ($students ->currentpage()-1) * $students ->perpage() + $loop->index + 1 }}</th>
+      <th scope="row">{{++$no}}</th>
       <td>{{$row->nim}}</td>
       <td>{{$row->name}}</td>
       <td>{{$row->email}}</td>
@@ -68,8 +72,9 @@
   </tbody>
 </table>
   @else
-  <p>data not available</p>
+    <p>data not available</p>
   @endif
+
   {{-- end of table --}}
 
     <div class="table-nav">
