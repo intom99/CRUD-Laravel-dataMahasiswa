@@ -23,16 +23,18 @@
         <div class="col">
            
             <div class="card">
-                <div class="card-body">
-                
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary mb-3 float-left" title="create" data-toggle="modal" data-target="#createData">
-  <i class="bi bi-plus-lg"></i>  Create
-</button>
+            <div class="card-header">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary mt-2 float-left" title="create" data-toggle="modal" data-target="#createData">
+                  <i class="bi bi-plus-lg"></i>  Create
+                </button>
 
-<form class="float-right" action="{{url('/students')}}" method="get">@csrf
-<input type="text" name="text_search" class="form-control" placeholder="search student: nim or name">
-</form>
+                <form class="float-right mt-2" action="{{url('/students')}}" method="get">@csrf
+                <input type="text" name="text_search" class="form-control" placeholder="search student: nim or name">
+                </form>
+            </div>
+
+            <div class="card-body">       
 
 @if (session('message'))
 <div class="alert alert-success">
@@ -106,7 +108,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{{action('StudentsController@store')}}">
+        <form method="POST" action="{{action('StudentsController@store')}}" enctype="multipart/form-data">
           @csrf
           <div class="form-group">
             <label class="font-weight-bold">NIM</label>
@@ -146,6 +148,14 @@
               @endforeach
             </select>
           </div>
+
+          {{-- upload Image--}}
+           <div class="form-group">
+            <label class="font-weight-bold">Upload Image</label>
+            <input type="file" class="form-control @error('images') is-invalid @enderror" value="{{old('images')}}" name="images">
+            @error('images') <div class="invalid-feedback">{{$message}}</div>@enderror
+          </div>
+
              
          
       </div>
