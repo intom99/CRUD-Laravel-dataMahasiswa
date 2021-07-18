@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Student;
 use App\Major;
 use App\Course;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -137,11 +138,11 @@ class StudentsController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Student $student)
+    public function destroy(Request $request, Student $student)
     {
 
         // Student::destroy($student->id);
-        $students = Student::find($id);
+        $students = Student::find($student->id);
 
         $students->nim = $request->nim;
         $students->name = $request->name;
@@ -150,15 +151,9 @@ class StudentsController extends Controller
         $students->course_id = $request->course_id;
         $students->major_id= $request->major_id;
 
+        $filename = $students->images;
+        File::delete('images/'.$filename);
         $students->delete();
         return redirect('/students')->with('message', 'Data student deleted successfully');
     }
-
-    // public function search(Request $request)
-    // {
-    //     $limit = 5;
-    //     $search = $request->text_search;
-    //     $students = Student::where('name', 'like', "%" . $search . "%")->paginate($limit);
-    //     return view('students.index', compact('students'));
-    // }
 }

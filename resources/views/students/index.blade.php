@@ -184,7 +184,7 @@
         <form action="{{action('StudentsController@destroy', $data->id)}}" method="post" class="d-inline">
           @method('delete')
           @csrf
-          <p>Do you wanna deleted <b>{{$data->name}}</b> course?</p>    
+          <p>Do you wanna deleted data student <b>{{$data->name}}</b> ?</p>    
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger">Delete</button>
