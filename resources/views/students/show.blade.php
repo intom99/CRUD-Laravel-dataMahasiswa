@@ -31,11 +31,13 @@
                     <table class="table table-bordered">                
                           <tr>
                             <th scope="row">NIM</th>
-                            <td>{{$student->nim}}</td>   
+                            <td>{{$student->nim}}</td>
+                            <td rowspan="5"><img width="250px" height="200px" src="{{asset('images/'.$student->images)}}"></td>   
                           </tr>
                           <tr>
                             <th scope="row">Name</th>
                             <td>{{$student->name}}</td>   
+                              
                           </tr>
                           <tr>
                             <th scope="row">Email</th>
@@ -52,9 +54,11 @@
                           <tr>
                             <th scope="row">Course</th>
                             <td>{{$student->course->course_name}}</td>   
-                          </tr>   
+                            <td><b>Url SEO : </b> {{$student->name_seo}}</td> 
+                            
+                          </tr>
                       </table>
-
+ 
                 </div>
             </div>
         </div>
@@ -76,7 +80,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form method="POST" action="{{action('StudentsController@update',$student->id)}}">
+        <form method="POST" action="{{action('StudentsController@update',$student->id)}}" enctype="multipart/form-data">
           @method('PATCH')
           @csrf
           <div class="form-group">
@@ -116,7 +120,14 @@
                   <option value="{{$data->id}}" {{ $data->id == $student->course->id ? 'selected' : '' }}>{{$data->no_course.' - '.$data->course_name}}</option>
               @endforeach
             </select>
-          </div>            
+          </div> 
+
+          {{-- upload Image--}}
+           <div class="form-group">
+            <label class="font-weight-bold">Upload Gambar</label>
+            <input type="file" name="images" class="form-control @error('images') is-invalid @enderror" value="">
+             @error('images') <div class="invalid-feedback">{{$message}}</div>@enderror
+          </div>           
          
       </div>
       <div class="modal-footer">

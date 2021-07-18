@@ -108,27 +108,45 @@ class StudentsController extends Controller
      * @param  \App\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nim' => 'required',
             'name' => 'required',
             'email' => 'required',
             'address' => 'required',
+            'images'=>'image|mimes:jpeg,jpg,png',
             'course_id' => 'required',
             'major_id' => 'required'
         ]);
 
-        Student::where('id', $student->id)->update([
-            'nim' => $request->nim,
-            'name' => $request->name,
-            'email' => $request->email,
-            'address' => $request->address,
-            'course_id' => $request->course_id,
-            'major_id' => $request->major_id
-        ]);
+        $students = Student::find($id);
+        if($request->has('images'))
+        {
+            $students->nim = $request->nim;
+            $students->name = $request->name;
+            $students->email = $request->email;
+            $students->address = $request->address;
+            $students->course_id = $request->course_id;
+            $students->major_id= $request->major_id;
+            $students->name_seo = Str::slug($request->name);
 
+            $images = $request->images;
+            $filename = time().'.'.$images->getClientOriginalExtension();
+            $images->move('images/',$filename);
+            $students->images = $filename;
+        }else{
+            $students->nim = $request->nim;
+            $students->name = $request->name;
+            $students->email = $request->email;
+            $students->address = $request->address;
+            $students->course_id = $request->course_id;
+            $students->major_id= $request->major_id;
 
+            $students->name_seo = Str::slug($request->name);
+        }
+
+        $students->update();
         return redirect('/students')->with('message', 'Data Updated successfully');
     }
 
