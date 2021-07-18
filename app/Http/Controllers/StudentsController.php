@@ -6,6 +6,7 @@ use App\Student;
 use App\Major;
 use App\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class StudentsController extends Controller
 {
@@ -50,11 +51,28 @@ class StudentsController extends Controller
             'name' => 'required',
             'email' => 'required',
             'address' => 'required',
+            'images'=>'required|image|mimes:jpeg,jpg,png',
             'course_id' => 'required',
-            'major_id' => 'required'
+            'major_id' => 'required',
         ]);
 
-        Student::create($request->all());
+        $students = New Student;
+        $students->nim = $request->nim;
+        $students->name = $request->name;
+        $students->email = $request->email;
+        $students->address = $request->address;
+        $students->course_id = $request->course_id;
+        $students->major_id= $request->major_id;
+        $students->name_seo = Str::slug($request->name);
+
+        $images = $request->images;
+        $filename = time().'.'.$images->getClientOriginalExtension();
+        $images->move('images/',$filename);
+
+        $students->images = $filename;
+        $students->save();
+
+        // Student::create($request->all());
         return redirect('/students')->with('message', 'Data Added Successfully');
     }
 
@@ -122,7 +140,17 @@ class StudentsController extends Controller
     public function destroy(Student $student)
     {
 
-        Student::destroy($student->id);
+        // Student::destroy($student->id);
+        $students = Student::find($id);
+
+        $students->nim = $request->nim;
+        $students->name = $request->name;
+        $students->email = $request->email;
+        $students->address = $request->address;
+        $students->course_id = $request->course_id;
+        $students->major_id= $request->major_id;
+
+        $students->delete();
         return redirect('/students')->with('message', 'Data student deleted successfully');
     }
 
