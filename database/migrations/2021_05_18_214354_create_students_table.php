@@ -19,6 +19,8 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('address');
+            $table->string('name_seo');
+            $table->string('gambar');
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('major_id');
             $table->timestamps();
