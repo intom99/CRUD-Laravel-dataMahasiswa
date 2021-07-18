@@ -23,15 +23,16 @@
         <div class="col">
            
             <div class="card">
-                <div class="card-body">
-                                 
-         <!-- Button trigger modal -->
-          <button type="button" class="btn btn-primary mb-3 float-left" data-toggle="modal" data-target="#createData">
-            <i class="bi bi-plus-lg"></i>  Create
-          </button>
-          <form class="float-right" action="{{url('/majors')}}" method="get">@csrf
-            <input type="text" name="text_search" class="form-control" placeholder="search major: code or name">
-            </form>
+            <div class="card-header">
+              <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary mt-2 float-left" data-toggle="modal" data-target="#createData">
+                  <i class="bi bi-plus-lg"></i>  Create
+                </button>
+                <form class="float-right mt-2" action="{{url('/majors')}}" method="get">@csrf
+                  <input type="text" name="text_search" class="form-control" placeholder="search major: code or name">
+                  </form>            
+            </div>
+            <div class="card-body">                  
 
             @if (session('message'))
                 <div class="alert alert-success">
