@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Student;
 use App\Major;
 use App\Course;
-use File;
+//use Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class StudentsController extends Controller
@@ -52,23 +53,25 @@ class StudentsController extends Controller
             'name' => 'required',
             'email' => 'required',
             'address' => 'required',
-            'images'=>'required|image|mimes:jpeg,jpg,png',
+            'images' => 'required|image|mimes:jpeg,jpg,png',
             'course_id' => 'required',
             'major_id' => 'required',
         ]);
 
-        $students = New Student;
+        $students = new Student;
         $students->nim = $request->nim;
         $students->name = $request->name;
         $students->email = $request->email;
         $students->address = $request->address;
         $students->course_id = $request->course_id;
-        $students->major_id= $request->major_id;
+        $students->major_id = $request->major_id;
         $students->name_seo = Str::slug($request->name);
 
         $images = $request->images;
-        $filename = time().'.'.$images->getClientOriginalExtension();
-        $images->move('images/',$filename);
+        $filename = time() . '.' . $images->getClientOriginalExtension();
+
+        //Image::make($images)->resize(180, 130)->save('thumb/' . $filename);
+        $images->move('images/', $filename);
 
         $students->images = $filename;
         $students->save();
@@ -115,33 +118,32 @@ class StudentsController extends Controller
             'name' => 'required',
             'email' => 'required',
             'address' => 'required',
-            'images'=>'image|mimes:jpeg,jpg,png',
+            'images' => 'image|mimes:jpeg,jpg,png',
             'course_id' => 'required',
             'major_id' => 'required'
         ]);
 
         $students = Student::find($id);
-        if($request->has('images'))
-        {
+        if ($request->has('images')) {
             $students->nim = $request->nim;
             $students->name = $request->name;
             $students->email = $request->email;
             $students->address = $request->address;
             $students->course_id = $request->course_id;
-            $students->major_id= $request->major_id;
+            $students->major_id = $request->major_id;
             $students->name_seo = Str::slug($request->name);
 
             $images = $request->images;
-            $filename = time().'.'.$images->getClientOriginalExtension();
-            $images->move('images/',$filename);
+            $filename = time() . '.' . $images->getClientOriginalExtension();
+            $images->move('images/', $filename);
             $students->images = $filename;
-        }else{
+        } else {
             $students->nim = $request->nim;
             $students->name = $request->name;
             $students->email = $request->email;
             $students->address = $request->address;
             $students->course_id = $request->course_id;
-            $students->major_id= $request->major_id;
+            $students->major_id = $request->major_id;
 
             $students->name_seo = Str::slug($request->name);
         }
@@ -158,8 +160,6 @@ class StudentsController extends Controller
      */
     public function destroy(Request $request, Student $student)
     {
-
-        // Student::destroy($student->id);
         $students = Student::find($student->id);
 
         $students->nim = $request->nim;
@@ -167,10 +167,10 @@ class StudentsController extends Controller
         $students->email = $request->email;
         $students->address = $request->address;
         $students->course_id = $request->course_id;
-        $students->major_id= $request->major_id;
+        $students->major_id = $request->major_id;
 
         $filename = $students->images;
-        File::delete('images/'.$filename);
+        File::delete('images/' . $filename);
         $students->delete();
         return redirect('/students')->with('message', 'Data student deleted successfully');
     }
